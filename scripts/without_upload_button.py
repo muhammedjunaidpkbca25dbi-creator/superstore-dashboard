@@ -25,7 +25,7 @@ st.markdown("Interactive dashboard for Superstore sales analysis")
 @st.cache_data
 def load_data():
     return pd.read_csv(
-        r"C:\output\superstore_clean.csv",
+        r"output\superstore_clean.csv",
         parse_dates=["order_date", "ship_date"]
     )
 
