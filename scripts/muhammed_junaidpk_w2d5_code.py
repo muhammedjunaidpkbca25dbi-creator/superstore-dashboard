@@ -17,19 +17,30 @@ st.title("📊 Superstore Dashboard")
 st.markdown("Interactive dashboard for Superstore sales analysis")
 
 # --------------------------------
-# Load Data
+# Upload CSV File
 # --------------------------------
-@st.cache_data(ttl=600)  # Cache data for 10 minutes
-def load_data():
+
+uploaded_file = st.file_uploader(
+    "Upload Superstore CSV",
+    type=["csv"]
+)
+
+if uploaded_file is None:
+    st.info("Please upload a CSV file to continue.")
+    st.stop()
+
+
+@st.cache_data(ttl=600)
+def load_data(file):
     return pd.read_csv(
-        r"C:\Users\muhju\Downloads\4.1 project\output\superstore_clean.csv",
+        file,
         parse_dates=["order_date", "ship_date"]
     )
 
 try:
-    df = load_data()
+    df = load_data(uploaded_file)
 except Exception as e:
-    st.error(f"Error loading file: {e}")
+    st.error(f"Error reading file: {e}")
     st.stop()
 
 if st.button("refresh data"):
